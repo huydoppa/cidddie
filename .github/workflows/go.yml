@@ -20,8 +20,8 @@ jobs:
           PR_NUMBER=${PR_URL##*/}
           echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
           curl -H "Authorization: token $GITHUB_TOKEN" \
-     -H "Accept: application/vnd.github.v3.permissions-summary+json" \
-     https://api.github.com/user
+          -H "Accept: application/vnd.github.v3.permissions-summary+json" \
+          https://api.github.com/user
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   build:
