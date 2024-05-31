@@ -1,0 +1,42 @@
+name: getFOOOO
+
+on:
+  issue_comment:
+    types: [ created ]
+
+jobs:
+  getprnumber:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.pr_number.outputs.number }}
+    steps:
+      - name: Get PR number
+        id: pr_number
+        if: ${{ github.event_name == 'issue_comment'}}
+        run: |
+          PR_URL="${{ github.event.issue.pull_request.url }}"
+          PR_NUMBER=${PR_URL##*/}
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+      - uses: khan/pull-request-comment-trigger@master
+        if: ${{ github.event_name == 'issue_comment'}}
+        id: check_issue_comment
+        with:
+          trigger: '@flank-it'
+          reaction: eyes
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
