@@ -17,12 +17,6 @@ jobs:
           PR_URL="${{ github.event.issue.pull_request.url }}"
           PR_NUMBER=${PR_URL##*/}
           echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
-      - uses: khan/pull-request-comment-trigger@master
-        if: ${{ github.event_name == 'issue_comment'}}
-        id: check_issue_comment
-        with:
-          trigger: '@flank-it'
-          reaction: eyes
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
