@@ -19,7 +19,6 @@ jobs:
           echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
   build:
     runs-on: ubuntu-latest
     steps:
