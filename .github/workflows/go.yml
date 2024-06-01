@@ -19,11 +19,16 @@ jobs:
           PR_URL="${{ github.event.issue.pull_request.url }}"
           PR_NUMBER=${PR_URL##*/}
           echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
-          curl -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3.permissions-summary+json" \
-          https://api.github.com/user
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Checkout Pull Request
+        if: github.event_name == 'issue_comment'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr checkout ${{ needs.should_run_it.outputs.pr_number }}
   build:
     runs-on: ubuntu-latest
     steps:
