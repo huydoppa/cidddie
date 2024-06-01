@@ -1,0 +1,15 @@
+name: ScriptInjectionAction
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  getcomment:
+    permission:
+      actions: write
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Script Injection 
+      run: |
+        echo ${{ github.event.comment.body }}
