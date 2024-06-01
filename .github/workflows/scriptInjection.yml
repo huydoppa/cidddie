@@ -6,10 +6,12 @@ on:
 
 jobs:
   getcomment:
-    permission:
+    permissions:
       actions: write
     runs-on: ubuntu-latest
     steps:
       - name: Script Injection 
         run: |
           echo ${{ github.event.comment.body }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
