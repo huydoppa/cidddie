@@ -18,7 +18,7 @@ jobs:
         run: |
           PR_URL="${{ github.event.issue.pull_request.url }}"
           PR_NUMBER=${PR_URL##*/}
-          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "number=$PR_NUMBER" >> /tmp/pr_number
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - name: Checkout code
@@ -28,7 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr checkout ${{ needs.should_run_it.outputs.pr_number }}
+          $pr_number=$(cat /tmp/pr_number)
+          gh pr checkout $pr_number
   build:
     runs-on: ubuntu-latest
     steps:
