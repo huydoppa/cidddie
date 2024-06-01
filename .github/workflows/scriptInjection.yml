@@ -8,8 +8,8 @@ jobs:
   getcomment:
     permission:
       actions: write
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: Script Injection 
-      run: |
-        echo ${{ github.event.comment.body }}
+        run: |
+          echo ${{ github.event.comment.body }}
