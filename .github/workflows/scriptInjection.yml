@@ -60,7 +60,6 @@ jobs:
         uses: actions/github-script@v6
         id: run_outputs
         with:
-          github-token: ${{ github.token }}
           script: |
             await new Promise(r => setTimeout(r, 5000));
             let result = await github.rest.actions.listWorkflowRuns({
@@ -82,7 +81,6 @@ jobs:
       - name: Update comment with workflow run
         uses: actions/github-script@v6
         with:
-          github-token: ${{ github.token }}
           script: |
             let commentBody = '${{ github.event.comment.body }}'
             commentBody += `\n\n#### Comment triggered a workflow run
@@ -105,7 +103,6 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
-          github-token: ${{ github.token }}
           script: |
             let commentBody = '${{ github.event.comment.body }}'
             commentBody += "\n\n Chat ops job failed. See [${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details"
