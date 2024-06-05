@@ -14,7 +14,6 @@ jobs:
         uses: actions/github-script@v6
         id: run_outputs
         with:
-          github-token: ${{ github.token }}
           script: |
             let commentBody = '${{ github.event.comment.body }}'
             commentBody += `\n\n#### Comment triggered a workflow run
