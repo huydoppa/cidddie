@@ -16,14 +16,3 @@ jobs:
         with:
           script: |
             let commentBody = '${{ github.event.comment.body }}'
-            commentBody += `\n\n#### Comment triggered a workflow run
-
-              Started workflow run: [${{ fromJSON(steps.run_outputs.outputs.result).id }}](${{ fromJSON(steps.run_outputs.outputs.result).html_url }})
-              * \`recreate_vm: ${{ steps.outputs.outputs.recreate_vm }}\``
-            github.rest.issues.updateComment({
-              issue_number: ${{ github.event.issue.number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: ${{ github.event.comment.id }},
-              body: commentBody
-            })
